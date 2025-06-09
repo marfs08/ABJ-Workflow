@@ -271,7 +271,8 @@
       <a onclick="showSection('returnfunnel'); closeDropdown()">Return Funnel</a>
       <a onclick="showSection('emailhandling'); closeDropdown()">Email Handling</a>
       <a onclick="showSection('disputeMan'); closeDropdown()">Dispute</a>
-
+      <a onclick="showSection('ordercancellation'); closeDropdown()">Order Cancellation</a>
+      <a onclick="showSection('orderstatus'); closeDropdown()">Order Status</a>
     </div>
   </div>
 </nav>
@@ -1273,7 +1274,166 @@ Please let us know how you’d like to proceed.
 </script>
 </section>
 
+<section id="ordercancellation">
+  <h2>🚫 Order Cancellation Workflow</h2>
 
+  <h3>1. Check Order Fulfillment Time</h3>
+  <ul>
+       <li>Cancel allowed only if order is unfulfilled within 3 hours of placement.</li>
+   <li>If the order is still unfulfilled after 3 hours, do NOT cancel. Instead, follow up with the supplier for status.</li>
+</ul>
+
+  <h3>2. Cancellation Conditions (When cancellation can be processed)</h3>
+
+  <h4>A. Product Out of Stock</h4>
+  <ul>
+    <li>Always offer a replacement first.</li>
+    <li>If customer declines replacement, proceed with cancellation and refund.</li>
+  </ul>
+
+  <h4>B. Undeliverable Address</h4>
+  <ul>
+    <li>Request an alternative address from the customer.</li>
+    <li>If alternative address is also not serviceable, contact supplier to request a refund.</li>
+     <li>Once supplier confirms refund, process refund to the customer.</li>
+  </ul>
+
+  <h4>C. Disputes Filed or Threatened to File Dispute</h4>
+  <ul>
+    <li>Cancel only if the customer has filed or threatened to file a dispute for any of the following:</li>
+  <ul>
+    <li>Loss in transit items</li>
+    <li>Unfulfilled orders</li>
+    <li>Resent damaged items</li>
+  </ul>
+</ul>
+<li><b>Always confirm the dispute has been filed or the threat has been clearly communicated before canceling.</b></li>
+
+  <h3>3. Cancellation Restrictions (When NOT to cancel)</h3>
+  <p>Orders that are:</p>
+  <ul>
+    <li>Fulfilled, in transit, or delivered</li>
+  </ul>
+
+  <p>Orders with disputes filed but:</p>
+  <ul>
+    <li>Still within delivery timeframe (up to 15 business days)</li>
+    <li>Disputed due to delayed orders that are still moving</li>
+  </ul>
+</section>
+
+
+
+<section id="orderstatus" class="active">
+  <h2>🚨 Order Status Workflow</h2>
+
+  <h3>1. Unfulfilled for More Than 1 Day</h3>
+  <p><strong>Issue:</strong> Order has not been processed; no tracking provided.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier.</li>
+    <li>Inform the customer:<br>
+      <em>“We’re checking with our fulfillment team regarding your order status and will update you shortly.”</em>
+    </li>
+  </ul>
+
+  <h3>2. Info Received for More Than 3 Days</h3>
+  <p><strong>Issue:</strong> Tracking created but no shipment movement.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier.</li>
+    <li>Inform the customer:<br>
+      <em>“Your order has been marked for shipping, but there’s been no movement. We’re coordinating with our fulfillment team and will update you soon.”</em>
+    </li>
+  </ul>
+
+  <h3>3. Error in Tracking</h3>
+  <p><strong>Issue:</strong> Invalid or broken tracking link/number.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to fix or correct tracking info.</li>
+    <li>If you have platform access, assist the supplier in updating the tracking number.</li>
+  </ul>
+
+  <h3>4. No Movement for More Than 5 Days in Transit (Possible Lost in Transit)</h3>
+  <p><strong>Issue:</strong> Package stuck in the same location for over 5 days.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier and request a resend.</li>
+    <li>Inform the customer:<br>
+      <em>“It looks like your order may be lost in transit. We’ll resend it for you and offer a 30% discount for the inconvenience.”</em>
+    </li>
+    <li>If the customer has filed or threatened a dispute, refer to the Dispute Management Workflow.</li>
+  </ul>
+
+  <h3>5. In Transit but Moving (Delayed)</h3>
+  <p><strong>Issue:</strong> Package is delayed but tracking shows movement.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>If within delivery timeframe (15 business days): advise the customer to wait.</li>
+    <li>If outside delivery timeframe: offer a 30% discount for the delay.</li>
+  </ul>
+
+  <h3>6. Returned to Sender</h3>
+  <p><strong>Issue:</strong> Package is being returned to the supplier.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to resend the package.</li>
+    <li>If due to incorrect/incomplete address, contact the customer for the correct address.</li>
+  </ul>
+
+  <h3>7. Delivered but Not Received</h3>
+  <p><strong>Issue:</strong> Tracking shows "delivered" but customer didn’t receive the item.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Request Proof of Delivery (POD) from the supplier.</li>
+    <li>Advise the customer to:
+      <ul>
+        <li>Check with neighbors, building staff, or household members.</li>
+        <li>Wait up to 3 business days, as items may still arrive.</li>
+      </ul>
+    </li>
+    <li>If POD is provided but the customer insists they didn’t receive it:
+      <ul>
+        <li>Ask the customer to obtain a proof of loss from the courier.</li>
+        <li>Once provided, proceed to resend the item.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>8. Exception (Declared Lost by Courier)</h3>
+  <p><strong>Issue:</strong> Courier has marked the package as lost.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to resend.</li>
+    <li>Inform the customer:<br>
+      <em>“Your package has been declared lost in transit. We will resend it immediately.”</em>
+    </li>
+  </ul>
+
+  <h3>9. Failed Delivery Attempt</h3>
+  <p><strong>Issue:</strong> Courier failed to deliver the package due to:</p>
+  <ul>
+    <li>Recipient unavailable</li>
+    <li>Incorrect/incomplete address</li>
+    <li>Delivery refused</li>
+    <li>Restricted access</li>
+    <li>Weather or operational issues</li>
+  </ul>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Notify the customer of the failed attempt.</li>
+    <li>Ask for any needed information (e.g., correct address or delivery instructions).</li>
+    <li>No refunds should be processed.</li>
+    <li>Resend the item once the issue is resolved.</li>
+  </ul>
+
+  <h3>❗ Important Note:</h3>
+ <ul>
+   <li>For <b>refused deliveries</b> or orders <b>not picked up</b>, no refund should be issued.</li>
+   <li> Resend the item once the issue is clarified.</li>
+  </ul>
+</section>
 
 
 
