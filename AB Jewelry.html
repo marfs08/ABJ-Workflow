@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AB Jewelry</title>
+
+ <style>
+  :root {
+    --primary: #D4AF37; /* Gold */
+    --accent: #C5A100;  /* Deeper gold for hover */
+    --bg: #ffffff;      /* Light background */
+    --text: #000000;    /* Black text */
+    --card-bg: #ffffff;
+    --border: #e5e5e5;
+    --shadow: rgba(0, 0, 0, 0.05);
+  }
+
+  body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 25px;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  nav {
+    background-color: var(--card-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px var(--shadow);
+    border-bottom: 2px solid var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--text);
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  nav a:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  nav a.active {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background: var(--card-bg);
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px var(--shadow);
+    z-index: 10;
+    min-width: 180px;
+  }
+
+  .dropdown.open .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text);
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+
+  .dropdown-content a:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  h1, h2, h3 {
+    color: var(--text);
+    border-left: 5px solid var(--primary);
+    padding-left: 10px;
+    margin-top: 2rem;
+  }
+
+  section {
+    display: none;
+  }
+
+  section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .div-table {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px var(--shadow);
+    margin: 2rem 0;
+    background-color: var(--card-bg);
+  }
+
+  .div-table-row {
+    display: flex;
+    border-top: 1px solid var(--border);
+  }
+
+  .div-table-row:first-child {
+    border-top: none;
+  }
+
+  .div-table .cell {
+    flex: 1;
+    padding: 1rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .div-table .cell:last-child {
+    border-right: none;
+  }
+
+  .div-table-row.header {
+    background-color: #fff7e6;
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  .address {
+    background: #fffdf8;
+    border-left: 4px solid var(--primary);
+    padding: 1rem;
+    font-family: monospace;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px var(--shadow);
+    color: var(--text);
+  }
+
+  details summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .div-table-row {
+      flex-direction: column;
+    }
+
+    .div-table .cell {
+      border: none;
+      border-bottom: 1px solid #eee;
+      padding-left: 50%;
+      position: relative;
+    }
+
+    .div-table .cell::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      width: 45%;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .div-table-row.header {
+      display: none;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+  <nav>
+  <a class="active" onclick="showSection('home')">Home</a>
+  <a href="https://ab-jewelry.co/" target="_blank">AB Jewelry</a>
+  <a onclick="showSection('storepolicies')">Store Policies</a>
+  <div class="dropdown" id="workflowDropdown">
+    <a onclick="toggleDropdown()">Workflow ▾</a>
+    <div class="dropdown-content">
+      <a onclick="showSection('workflow'); closeDropdown()">Delayed Orders</a>
+      <a onclick="showSection('returnfunnel'); closeDropdown()">Return Funnel</a>
+      <a onclick="showSection('emailhandling'); closeDropdown()">Email Handling</a>
+      <a onclick="showSection('disputeMan'); closeDropdown()">Dispute</a>
+      <a onclick="showSection('ordercancellation'); closeDropdown()">Order Cancellation</a>
+      <a onclick="showSection('orderstatus'); closeDropdown()">Order Status</a>
+      <a onclick="showSection('meetings'); closeDropdown()">Meetings</a>
+    </div>
+  </div>
+</nav>
+
+
+<section id="home" class="active">
+      <h1 style="text-align: center;">AB JEWELRY</h1>
+
+
+      <h1 style="text-align: center;">GET TO KNOW OUR TEAM!</h1>
+      <div class="div-table">
+        <div class="div-table-row header">
+          <div class="cell">Department</div>
+          <div class="cell">Team Members</div>
+        </div>
+        <div class="div-table-row">
+          <div class="cell" data-label="Department">Store Owners</div>
+          <div class="cell" data-label="Team Members">DAN & DEMEN</div>
+        </div>
+        <div class="div-table-row">
+          <div class="cell" data-label="Department">Dispute</div>
+          <div class="cell" data-label="Team Members">Alvin, & Jean</div>
+        </div>
+        <div class="div-table-row">
+          <div class="cell" data-label="Department">Supply Chain</div>
+          <div class="cell" data-label="Team Members">Marife, Ali & Alvin</div>
+        </div>
+        <div class="div-table-row">
+          <div class="cell" data-label="Department">Customer Service</div>
+          <div class="cell" data-label="Team Members">Marife, Cath, Camil, Chan, Alvin, & Roshelle</div>
+        </div>
+<div class="div-table-row">
+          <div class="cell" data-label="Department">Supplier</div>
+          <div class="cell" data-label="Team Members">Claus</div>
+        </div>
+    </section>
+
+
+  <section id="storepolicies">
+    <h1>STORE POLICIES</h1>
+  <h2>Cancellation Policy</h2>
+  <p><strong>Cancellations are only allowed if the order is still unfulfilled within 3 hours.</strong></p>
+
+<details>
+  <summary style="cursor: pointer;">When customer wants to cancel fulfilled orders and/or outside timeframe</summary>
+  <ul>
+Thank you for contacting us.
+
+We understand you wish to cancel your order. However, please note that cancellations are only allowed if the order is still unfulfilled within 3 hours of placing it.
+
+As your order has already been processed/shipped, we are unfortunately unable to cancel it at this time.
+
+If you would like to return the item after delivery, please let us know and we can provide you with our return policy and instructions.
+
+Thank you for your understanding.
+</details>
+
+<script>
+  function toggleTemplate0() {
+    const content = document.getElementById("templateContent0");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+	
+	<h2> Return, Refund, Replacement & Exchanges Policy </h2>
+
+  <h3>Return Period</h3>
+  <div class="div-table">
+    <div class="div-table-row header">
+      <div class="cell">Store</div>
+      <div class="cell">Return Period</div>
+	<div class="cell">Return Policy</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Store">AB Jewelry</div>
+      <div class="cell" data-label="Return Period">30 days after delivery</div>
+      <div class="cell" data-label="Return Policy">
+        <a href="https://ab-jewelry.co/pages/returns-refunds" target="_blank">View Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <h3>Refund Policy</h3>
+  <div class="div-table">
+    <div class="div-table-row header">
+      <div class="cell">Condition</div>
+      <div class="cell">Refund Eligibility</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Full Refund</div>
+      <div class="cell" data-label="Refund Eligibility">The package was returned to the Fulfillment Team’s warehouse in China and confirmed by the team</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">No Refund</div>
+      <div class="cell" data-label="Refund Eligibility">Damaged, incomplete, stuck at customs, or lost in transit (except in case of dispute)</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">No Refund</div>
+      <div class="cell" data-label="Refund Eligibility">Customer-refused deliveries</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">No Refund</div>
+      <div class="cell" data-label="Refund Eligibility">Packages not picked up from the pickup point</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">No Refund</div>
+      <div class="cell" data-label="Refund Eligibility">"Returned to Sender" shipments</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">No Refund</div>
+      <div class="cell" data-label="Refund Eligibility">Address issues leading to failed delivery</div>
+    </div>
+  </div>
+
+  <h3>Free Resend Policy</h3>
+  <div class="div-table">
+    <div class="div-table-row header">
+      <div class="cell">Condition</div>
+      <div class="cell">Free Resend Eligibility</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Invalid Address (not the customer’s fault)</div>
+      <div class="cell" data-label="Free Resend Eligibility">Allowed (no full refund)</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Returned to Sender</div>
+      <div class="cell" data-label="Free Resend Eligibility">Allowed</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Damaged, Incorrect, or Missing Items</div>
+      <div class="cell" data-label="Free Resend Eligibility">Allowed</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Lost in Transit</div>
+      <div class="cell" data-label="Free Resend Eligibility">Allowed</div>
+    </div>
+  </div>
+
+  <h3>Replacements & Exchanges</h3>
+  <div class="div-table">
+    <div class="div-table-row header">
+      <div class="cell">Condition</div>
+      <div class="cell">Replacement Policy</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Size Doesn’t Fit, Quality Issue</div>
+      <div class="cell" data-label="Replacement Policy"><details>
+  <summary style="cursor: pointer;">Replacement Fee</summary>
+  <ul>
+    <li>Orders $1–$60 USD → Replacement fee: <strong>$9.95 USD</strong></li>
+    <li>Orders $60.01–$99 USD → Replacement fee: <strong>$14.95 USD</strong></li>
+    <li>Orders $99.01 and above → Replacement fee: <strong>$19.95 USD</strong></li>
+  </ul>
+</details></div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Damaged, Incorrect, or Missing Items</div>
+      <div class="cell" data-label="Replacement Policy">Free reshipment</div>
+    </div>
+  </div>
+
+  <h3>Supplier Refunds & Resends</h3>
+  <div class="div-table">
+    <div class="div-table-row header">
+      <div class="cell">Condition</div>
+      <div class="cell">Supplier Action</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Returned package arrives at supplier's warehouse</div>
+      <div class="cell" data-label="Supplier Action">Refund Issued</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Out-of-stock item, customer refuses alternatives</div>
+      <div class="cell" data-label="Supplier Action">Refund Issued</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Damaged, incorrect, or missing item</div>
+      <div class="cell" data-label="Supplier Action">Free Resend</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">"Returned to Sender" issue</div>
+      <div class="cell" data-label="Supplier Action">Free Resend</div>
+    </div>
+    <div class="div-table-row">
+      <div class="cell" data-label="Condition">Failed delivery due to address error</div>
+      <div class="cell" data-label="Supplier Action">Free Resend</div>
+    </div>
+  </div>
+</section>
+
+  <section id="workflow">
+
+<h1>Delayed Orders</h1>
+
+<p>This Delayed Orders Workflow aims to effectively manage customer inquiries related to delayed shipments, minimize disputes by providing timely communication and compensation options, and ensure customer satisfaction through clear resolutions including refunds, discounts, or replacement shipments.</p>
+
+<h2>🔔 Important Note:</h2>
+
+<p>Always prioritize resending the item according to our policy instead of issuing a refund. Refunds should only be offered if the customer threatens to file a dispute.</p>
+
+  <h3>1. Initial Customer Outreach About Delay</h3>
+  <p><strong>Customer Message:</strong> Asks about order delay or delivery time.</p>
+  <ul>
+    <li>Apologize for the inconvenience.</li>
+    <li>Inform delivery timeline:
+      <ul>
+        <li><strong>Delivery Time:</strong> 9–15 business days</li>
+        <li><strong>Processing Time:</strong> 1–3 business days</li>
+      </ul>
+    </li>
+    <li><strong>If order is within delivery timeframe:</strong> Ask customer to wait, reassure them order is on track.</li>
+    <li><strong>If order is outside delivery timeframe:</strong> Offer <strong>30% discount</strong> for a future purchase.</li>
+  </ul>
+
+  <h3>2. Customer Threatens to File a Dispute</h3>
+  <p><strong>Customer Message:</strong> Threatens dispute due to delay.</p>
+  <ul>
+    <li>Acknowledge frustration and apologize.</li>
+    <li>Offer a <strong>30%–50% refund</strong> depending on case severity.</li>
+    <li>Inform customer they will still receive the item.</li>
+  </ul>
+
+  <h3>3. Order Stuck in Transit (No Movement &gt; 5 Days)</h3>
+  <p><strong>Condition:</strong> Tracking shows no update for more than 5 business days.</p>
+  <ul>
+    <li>Consider item <strong>lost in transit</strong>.</li>
+    <li>Contact supplier to resend the item.</li>
+  </ul>
+
+  <h3>4. Customer Communication After Confirmed Lost in Transit</h3>
+  <ul>
+    <li>Inform customer item is lost in transit and replacement is being sent.</li>
+    <li>Offer a <strong>30% discount</strong> code for a future purchase as apology.</li>
+  </ul>
+
+  <h2>Suggested Customer Response Samples</h2>
+  
+<details>
+  <summary style="cursor: pointer; font-weight: bold;">Within Timeframe</summary>
+  <ul>
+We sincerely apologize for the delay. Please note that our delivery timeframe is 9–15 business days, with an additional 1–3 days for processing. Your order is still within this window, and we expect it to arrive soon. Thank you for your patience!
+  </ul>
+</details>
+
+<details>
+  <summary style="cursor: pointer; font-weight: bold;">Outside Timeframe</summary>
+  <ul>
+We're very sorry your order hasn't arrived yet. As it's now past the expected delivery timeframe, we’d like to offer you a 30% discount code for your next purchase. Let us know if you’d like us to send it over!
+  </ul>
+</details>
+
+<details>
+  <summary style="cursor: pointer; font-weight: bold;">Threatened Dispute</summary>
+  <ul>
+We understand your concern and truly apologize for the delay. As a gesture of goodwill, we can offer you a 30%–50% partial refund now, and you’ll still receive the item when it arrives. Please let us know how you’d like to proceed.  
+  </ul>
+</details>
+
+<details>
+  <summary style="cursor: pointer; font-weight: bold;">Stuck >5 Days (Lost in Transit)</summary>
+  <ul>
+It looks like your package hasn’t moved for several days, which suggests it may be lost in transit. We’ve arranged for a replacement to be sent right away, and we’re also happy to offer you a 30% discount on your next purchase as an apology.  </ul>
+</details>
+</section>
+
+    <section id="returnfunnel">
+  <h1>Return Funnel - Customer Wants to Return</h1>
+
+  <p>This return workflow is designed to provide alternative solutions to customers who wish to return their order for any reason other than damaged, incomplete, or incorrect items. The goal is to resolve issues efficiently—minimizing returns and operational costs—while maintaining customer satisfaction.</p>
+<h2>🔔 Important Note:</h2>
+
+<p>Always offer a replacement first as the primary resolution for return-related inquiries (excluding damaged, incomplete, or incorrect orders). Replacements are subject to a small fee based on the original order value. This provides customers with a quick, lower-cost solution while avoiding the inconvenience of return shipping.</p>
+<details>
+  <summary style="cursor: pointer; font-weight: bold;">📦 View Replacement Fee Breakdown</summary>
+  <ul>
+    <li>Orders $1–$60 USD → Replacement fee: <strong>$9.95 USD</strong></li>
+    <li>Orders $60.01–$99 USD → Replacement fee: <strong>$14.95 USD</strong></li>
+    <li>Orders $99.01 and above → Replacement fee: <strong>$19.95 USD</strong></li>
+  </ul>
+</details>
+
+  <h3>1. Initial Customer Inquiry</h3>
+  <p><strong>Action:</strong> Customer reaches out expressing disappointment with the product (e.g., chains don’t meet expectations).</p>
+  <p><strong>Response:</strong></p>
+  <ul>
+    <li>Acknowledge the issue empathetically and apologize.</li>
+    <li>Offer 10% refund without return to resolve the issue quickly and conveniently.</li>
+    <li>Clearly mention that return shipping is the customer's responsibility (typically $7–$10 USD), and customs charges may apply depending on the location.</li>
+    <li>Recommend using tracked shipping for returns, as untrackable packages cannot be refunded.</li>
+  </ul>
+
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate1()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Template Sample</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+  <div id="templateContent1" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thank you for your message, and I sincerely apologize for the disappointment with your recent order.
+
+We truly regret that the chains did not meet your expectations. As a resolution, we can offer you a 10% refund of your order total without requiring a return. This is a faster and more convenient option.
+
+However, if you still prefer to return the items for a full refund, please note that the cost of return shipping (typically $7–$10 USD) will need to be covered by you as the customer. There may also be customs charges depending on your location. We also highly recommend using a tracked shipping method, as we cannot process refunds for lost or untrackable packages.
+
+Please let us know which option you prefer, and we’ll proceed accordingly.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate1() {
+    const content = document.getElementById("templateContent1");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+
+  <h3>2. Customer Requests Higher or Full Refund (20% Refund)</h3>
+  <p><strong>Action:</strong> Customer requests a higher or full refund instead of the 10% offer.</p>
+  <p><strong>Response:</strong></p>
+  <ul>
+    <li>Express understanding and appreciation for their feedback.</li>
+    <li>Offer 20% refund without return to resolve the issue in a more generous and quicker manner.</li>
+    <li>Reiterate that return shipping costs (typically $7–$10 USD) will be the customer’s responsibility if they decide to return the item, along with any potential customs charges.</li>
+    <li>Emphasize the importance of tracked shipping to avoid issues with lost or untrackable returns.</li>
+    <li>Ask the customer to confirm if they would prefer the 20% refund without return or would still like to return the product for a full refund.</li>
+  </ul>
+
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate2()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Template Sample</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+  <div id="templateContent2" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thank you again for reaching out, and we appreciate your understanding.
+
+Thank you for your continued feedback, and I truly apologize again for the inconvenience and dissatisfaction with your recent order.
+
+We understand your concerns, and as a gesture of goodwill, we’d like to increase our offer to a 20% refund of your order total without requiring a return. We hope this helps address your disappointment in a quicker and more convenient way.
+
+Should you still prefer a full refund, we are happy to process it once the items are returned. Please note that the cost of return shipping (typically $7–$10 USD) is the responsibility of the customer, and depending on your location, customs charges may also apply. We strongly recommend using a tracked shipping method, as we’re unable to process refunds for untrackable or lost packages.
+
+Please let us know how you’d like to proceed, and we’ll be ready to assist you right away.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate2() {
+    const content = document.getElementById("templateContent2");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+
+  <h3>3. Customer Still Requests a Full Refund (20% Refund Reiteration)</h3>
+  <p><strong>Action:</strong> Customer still prefers to return the item for a full refund.</p>
+  <p><strong>Response:</strong></p>
+  <ul>
+    <li>Reaffirm the 20% refund offer without return.</li>
+    <li>If the customer prefers to return the product, outline the conditions for a full refund:</li>
+    <ul>
+      <li>Item must be returned within 30 days of receipt.</li>
+      <li>Item must be in original packaging and unused.</li>
+      <li>Customer covers return shipping costs, typically $7–$10 USD.</li>
+      <li>Tracked shipping is strongly recommended to ensure the return is safely processed.</li>
+      <li>Ensure the customer understands that untrackable or lost packages cannot be refunded.</li>
+    </ul>
+  </ul>
+
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate3()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Template Sample</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+  <div id="templateContent3" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+We completely understand your preference for a full refund and sincerely apologize for any inconvenience caused.
+
+As a resolution, we are able to offer a 20% refund of your original purchase total without requiring a return. This option allows you to avoid additional costs, including return shipping fees (typically $7–$10) and potential customs charges.
+
+However, if you still prefer a full refund, we can certainly process it once the item is returned under the following conditions:
+
+The item must be shipped back within 30 days of receipt
+It must be in its original packaging, and
+It must show no signs of use
+The cost of return shipping is your responsibility as the returning party
+
+We highly recommend using a tracked shipping method, as we cannot issue a refund for lost or untraceable packages
+Please let us know which option you prefer, and we’ll proceed accordingly.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate3() {
+    const content = document.getElementById("templateContent3");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+
+  <h3>4. Customer Still Wants a Full Refund</h3>
+  <p><strong>Action:</strong> Customer insists on returning the item for a full refund.</p>
+  <p><strong>Response:</strong></p>
+  <ul>
+    <li>Acknowledge the request and increase the refund offer to 30% without requiring a return.</li>
+    <li>Reiterate that this is the maximum refund that can be offered without the return of the item.</li>
+    <li>Confirm that return shipping costs will still be the responsibility of the customer, should they opt for a return, and emphasize the tracked shipping requirement for returns.</li>
+  </ul>
+
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate4()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Template Sample</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+  <div id="templateContent4" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thank you for getting back to us.
+
+As a gesture of goodwill, we are able to increase our previous offer and provide a 30% refund of your original purchase total without requiring the item to be returned. This is our maximum refund offer without a return, and it allows you to avoid any additional costs such as return shipping fees or customs charges.
+
+If you would still prefer a full refund, we completely understand. In that case, we will be happy to proceed once the item has been returned under the following conditions:
+
+The item must be shipped back within 30 days of receipt
+It must be in its original packaging
+It must show no signs of use
+Return shipping costs are the responsibility of the customer
+
+We recommend using a tracked shipping method, as we cannot issue refunds for lost or untraceable packages
+Should you choose this option, we will provide you with the return address and return form.
+Please let us know how you’d like to proceed, and we’ll assist you accordingly.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate4() {
+    const content = document.getElementById("templateContent4");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <h3>5. Customer Still Wants to Return Item</h3>
+  <p><strong>Action:</strong> Customer decides they would prefer a full refund by returning the item.</p>
+  <p><strong>Response:</strong></p>
+  <ul>
+    <li>Provide return address:</li>
+  </ul>
+
+  <div class="address">
+    Contact Name: Claus<br>
+    Address: No. 225, Dongguan Street, Shangyu District<br>
+    City: Shaoxing City<br>
+    Postal Code: 312300<br>
+    Province: Zhejiang Province<br>
+    Country: China<br>
+    Phone: +8 256 2252
+  </div>
+
+  <p>
+    Return Form: 
+    <a href="https://drive.google.com/file/d/1ZFZpzBIz_PF9tTG_ZppC5XTz7U6xPVvX/view?usp=drive_link" target="_blank">
+      Click to view form
+    </a>
+  </p>
+
+  <ul>
+    <li>Item must be returned in original packaging and unused, within 30 days.</li>
+    <li>Return shipping is the customer’s responsibility.</li>
+    <li>Tracked shipping is required for refund processing.</li>
+  </ul>
+
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate5()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Template Sample</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent5" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thank you for getting back to us.
+
+As a gesture of goodwill, we are able to increase our previous offer and provide a 30% refund of your original purchase total without requiring the item to be returned. This is our maximum refund offer without a return, and it allows you to avoid any additional costs such as return shipping fees or customs charges.
+
+If you would still prefer a full refund, we completely understand. In that case, we will be happy to proceed once the item has been returned under the following conditions:
+
+The item must be shipped back within 30 days of receipt
+It must be in its original packaging
+It must show no signs of use
+Return shipping costs are the responsibility of the customer
+
+We recommend using a tracked shipping method, as we cannot issue refunds for lost or untraceable packages
+Should you choose this option, we will provide you with the return address and return form.
+Please let us know how you’d like to proceed, and we’ll assist you accordingly.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate5() {
+    const content = document.getElementById("templateContent5");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+</section>
+
+<section id="emailhandling">
+  <h2>Email Handling & Supplier Issue Workflow</h2>
+
+  <p>This Email Handling & Supplier Issue Workflow aims to ensure efficient issue resolution by assigning email responsibility, checking records to avoid duplication, contacting the correct supplier by order date, logging issues in the right tabs, and performing daily follow-ups for timely resolution and customer satisfaction.</p>
+
+  <h3>1. Claim & Tag Emails</h3>
+  <h4>What to Do:</h4>
+  <ul> 
+    <li><strong>Tag your name</strong> on any email you're handling to show responsibility.</li>
+    <li><strong>Do not remove existing tags.</strong></li>
+   <h4>Best Practice:</h4>
+   <ul>
+    <li>Use consistent naming or team member format for tagging.</li>
+    <li>If you're unsure if someone else has followed up,<strong> communicate internally or check the Supplier Tasks and Issues sheet </strong> to verify if the issue has already been addressed or logged before taking action.</li>
+  </ul>
+</ul>
+
+  <h3>2. Open & Review the Supplier Tasks and Issues Sheet</h3>
+  <p>Before replying to any customer, <strong> review all relevant tabs to: </strong> </p>
+  <ul>
+    <li>Avoid duplication</li>
+    <li>Understand issue progress</li>
+    <li>Check for supplier responses</li>
+  </ul>
+  <p><strong>🔍Tabs to Check:</strong></p>
+  <ul>
+    <li>Customer Issues</li>
+    <li>Supplier Task Sheet</li>
+    <li>Supply Chain</li>
+    <li>CS Supply Chain</li>
+    <li>Returned to Sender</li>
+    <li>Refund</li>
+    <li>Discounts</li>
+    <li>Chargeback</li>
+  </ul>
+
+  <h3>3. Identify the Correct Supplier Based on Order Date</h3>
+  <div>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Order Placement Date</th>
+        <th>Supplier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Until <b>April 29, 2025</b></td>
+        <td>Eva</td>
+      </tr>
+      <tr>
+        <td><b>April 30 – May 29, 2025</b></td>
+        <td>Lucy</td>
+      </tr>
+      <tr>
+        <td>From <b>May 30, 2025</b></td>
+        <td>Claus (current)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <h4>Why This Is Important:</h4>
+  <ul>
+    <li>Ensures you contact the correct supplier</li>
+    <li>Prevents delays from miscommunication</li>
+  </ul>
+
+  <h3>4. Categorize the Issue & Record It Properly</h3>
+ 
+<details>
+<summary>Customer Issues Tab – If customer reaches out </summary>
+	<p>Record the following:</p>
+  <ol>
+  <li>
+    <b>Damaged / Incomplete / Incorrect Items</b>
+    <ul>
+       → Ask supplier to resend (Proof of Delivery)
+    </ul>
+  </li>
+  <li>
+   <b> Delivered but Not Received</b>
+    <ul>
+       → Request POD (Proof of Delivery)
+    </ul>
+  </li>
+  <li>
+  <b> Returned to Shipper Delivered to Supplier</b>
+    <ul>
+       → Ask supplier to confirm warehouse receipt + refund
+    </ul>
+  </li>
+</ol>
+</details>
+
+  <details>
+  <summary>Supplier Task Tab – Managed by Claus (supplier)</summary>
+  <p>Check for:</p>
+  <ul>
+    <li>Out-of-stock products</li>
+    <li>Shipping address problems</li>
+    <li>General fulfillment issues</li>
+  </ul>
+</details>
+
+<details>
+<p>Update <b>Feedback from Customer</b> column with any replies or confirmations.:</p>
+  <summary>Supply Chain Tab – Tracked by Supply Team (CS must review) </summary>
+  <p>Record or check:</p>
+  <ul>
+    <li><b>Unfulfilled for 3+ days</b>after info received</li>
+    <li><b>In transit for 10+ days</b></li>
+    <li><b>Tracking inactive for 5+ days</b></li>
+  </ul>
+<p>Use for internal follow-up to ensure suppliers act on logistics problems</p>
+</details>
+
+  <details>
+<summary>CS Supply Chain Tab</summary>
+    <p><b>Same rules</b> as Supply Chain tab <b>but prioritize</b> since customer reached out</p>
+<ul>
+    <li><b>Unfulfilled for 3+ days</b>after info received</li>
+    <li><b>In transit for 10+ days</b></li>
+    <li><b>Tracking inactive for 5+ days</b></li>
+  </ul>
+  <h4>↺ Returned to Sender Tab</h4>
+  <ul>
+    <li>Resend item immediately (no refunds unless policy allows)</li>
+    <li><b>Do not refund by default </b> – check refund eligibility.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Refund Sheet Tab</summary>
+  <ul>
+    <li>Only log once refund is processed</li>
+    <li>Includes order cancellations</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Discount Sheet Tab</summary>
+  <ul>
+    <li>Track all discounts and store credits issued</li>
+    <li>Include reasons and order information</li>
+  </ul>
+</details>
+
+  <details>
+  <summary>Chargeback Tab</summary>
+  <ul>
+    <li>Log only after customer confirms withdrawal</li>
+    <li>Update tab and notify Jean or Alvin</li>
+    <li>Follow Dispute Management Workflow</li>
+  </ul>
+</details>
+
+  <h3>5. Do Not Record These in Customer Issues Tab</h3>
+<div>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr><th>Issue Type</th><th>Where to Record / Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Not as Described</td><td>Log in Refund tab after refund</td></tr>
+      <tr><td>Order Cancellations</td><td>Log in Refund tab if processed</td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <h3>6. Daily Review & Follow-up</h3>
+  <ul>
+    <li>Review all logged/tagged issues</li>
+    <li>Follow up with correct supplier</li>
+    <li>Close only when fully resolved</li>
+  </ul>
+</section>
+
+
+
+<section id="disputeMan">
+  <h2>📋 Dispute Management: Customer Has Already Filed a Dispute / Chargeback</h2>
+
+  <p>When a customer files a dispute or chargeback, follow these steps:</p>
+
+  <h3> Coordination with Dispute Team</h3>
+  <ul>
+    <li> Verify order status (fulfilled, in transit, stuck, unfulfilled, etc.)</li>
+    <li> Understand the dispute reason</li>
+    <li> Apply the appropriate resolution strategy below</li>
+  </ul>
+  <p><strong>⚠️ Important:</strong><br>
+  <strong>Do not issue any refund or discount unless the customer has confirmed that the chargeback/dispute has been withdrawn.</strong><br>
+  <strong>Always request written confirmation and verify with the Dispute Team before processing any refund or discount.</strong></p>
+
+  <hr>
+
+  <h3>📌 1. Order Is Lost or No Movement (&gt;5 Business Days)</h3>
+  <p><strong>Status:</strong> No tracking update for more than 5 business days.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Consider the item lost in transit.</li>
+    <li>Offer a full refund in exchange for withdrawal of the dispute/chargeback.</li>
+  </ul>
+	<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate6()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent6" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thank you for getting back to us.
+
+We understand you’ve filed a dispute and we sincerely apologize for the delay.
+It appears the item was lost in transit.
+We can process a full refund if you agree to withdraw the chargeback/dispute.
+Please confirm so we can proceed immediately.
+  </div>
+</div>
+
+<script>
+  function toggleTemplate6() {
+    const content = document.getElementById("templateContent6");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>⏳ 2. Order Is Still Within Delivery Timeframe</h3>
+  <p><strong>Status:</strong> Tracking is active and still within the 9–15 business day delivery window (after 1–3 business days processing).</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Reassure the customer the order is on the way.</li>
+    <li>Offer a 30% discount if they withdraw the dispute.</li>
+    <li>Customer keeps the item when it arrives.</li>
+  </ul>
+
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate7()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent7" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+Thanks for getting in touch. Your order is still within our standard delivery timeframe and is currently on its way.
+As a goodwill gesture, we can offer you a 30% discount if you agree to withdraw the dispute.
+You’ll still receive your order as expected. Let us know how you'd like to proceed!
+  </div>
+</div>
+
+<script>
+  function toggleTemplate7() {
+    const content = document.getElementById("templateContent7");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>🚚 3. Order Is Outside Timeframe but Tracking Is Moving</h3>
+  <p><strong>Status:</strong> Order is delayed but still in transit with tracking updates.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Confirm the order is still moving.</li>
+    <li>Offer a 30% partial refund in exchange for withdrawing the dispute.</li>
+  </ul>
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate8()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent8" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+We’ve checked your order and although it’s delayed, it is still in transit.
+We can offer you a 30% partial refund if you agree to withdraw the dispute.
+You will still receive your order, and we appreciate your continued patience.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate8() {
+    const content = document.getElementById("templateContent8");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>❌ 4. Unfulfilled Order (Not Shipped)</h3>
+  <p><strong>Status:</strong> Order was never fulfilled or shipped.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Cancel the order immediately.</li>
+    <li>Offer a 30% discount code for a future purchase.</li>
+    <li>Process a full refund only if the customer withdraws the dispute/chargeback.</li>
+  </ul>
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate9()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent9" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+We’ve reviewed your order and found that it has not yet been fulfilled.
+If you’re willing to withdraw the chargeback, we’ll be happy to process a full refund right away.
+As an additional apology, here’s a 30% discount code you can use on your next purchase: SORRY30.
+Please let us know how you'd like to proceed—we’re here to help!
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate9() {
+    const content = document.getElementById("templateContent9");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>💥 5. Damaged Item Received (Second Resend)</h3>
+  <p><strong>Status:</strong> Customer received a damaged item—possibly twice—and filed or maintained a dispute.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Apologize sincerely and acknowledge the issue.</li>
+    <li>If this is the first time, consider a resend, but for repeat damage, do not offer another replacement.</li>
+    <li>Offer a full refund in exchange for withdrawing the dispute.</li>
+    <li>Optionally include a 30% discount code for a future order.</li>
+  </ul>
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate10()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent10" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+We're extremely sorry to hear that your item arrived damaged.
+We understand your frustration—especially if this has happened more than once.
+We’re prepared to issue a full refund if you're willing to withdraw the dispute/chargeback.
+As a token of apology, here’s a 30% discount code for your next purchase: SORRY30.
+Please let us know how you'd like to proceed.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate10() {
+    const content = document.getElementById("templateContent10");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>📦 6. Delivered But Not Received</h3>
+  <p><strong>Status:</strong> Tracking shows “Delivered” but customer claims item was not received.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Request Proof of Delivery (POD) from the supplier or courier.</li>
+    <li>Do not issue a refund at this point.</li>
+    <li>Offer a 30% discount only if the customer withdraws the dispute/chargeback.</li>
+  </ul>
+    <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate11()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent11" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+Thank you for reaching out. Our records show that your order was marked as delivered, but we understand you haven't received it.
+We're currently requesting proof of delivery (POD) from our shipping partner to investigate this further.
+In the meantime, we’d like to offer you a 30% discount as a goodwill gesture, if you’re willing to withdraw the dispute/chargeback.
+Let us know how you'd like to proceed—we appreciate your patience while we look into this.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate11() {
+    const content = document.getElementById("templateContent11");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+  <hr>
+
+  <h3>🔧 7. Size Not Fit or Quality Issue</h3>
+  <p><strong>Status:</strong> Customer files dispute due to wrong size or quality dissatisfaction.</p>
+  <p><strong>Steps:</strong></p>
+  <ul>
+    <li>Offer to resend the correct size or replace item if quality issue.</li>
+    <li>Offer a 30% discount as goodwill.</li>
+    <li>Request withdrawal of dispute in exchange for resend + discount.</li>
+  </ul>
+     <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate12()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Customer Message Template</strong></span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent12" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+We're sorry to hear that the size didn’t fit / the quality did not meet your expectations.
+We’d like to resend the correct size or replace the item for you.
+Additionally, we can offer you a 30% discount as a goodwill gesture if you agree to withdraw the dispute/chargeback.
+Please let us know how you’d like to proceed.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate12() {
+    const content = document.getElementById("templateContent12");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+</section>
+
+<section id="ordercancellation">
+  <h2>🚫 Order Cancellation Workflow</h2>
+
+  <h3>1. Check Order Fulfillment Time</h3>
+  <ul>
+       <li>Cancel allowed only if order is unfulfilled within 3 hours of placement.</li>
+   <li>If the order is still unfulfilled after 3 hours, do NOT cancel. Instead, follow up with the supplier for status.</li>
+</ul>
+
+  <h3>2. Cancellation Conditions (When cancellation can be processed)</h3>
+
+  <h4>A. Product Out of Stock</h4>
+  <ul>
+    <li>Always offer a replacement first.</li>
+    <li>If customer declines replacement, proceed with cancellation and refund.</li>
+  </ul>
+
+  <h4>B. Undeliverable Address</h4>
+  <ul>
+    <li>Request an alternative address from the customer.</li>
+    <li>If alternative address is also not serviceable, contact supplier to request a refund.</li>
+     <li>Once supplier confirms refund, process refund to the customer.</li>
+  </ul>
+
+  <h4>C. Disputes Filed or Threatened to File Dispute</h4>
+  <ul>
+    <li>Cancel only if the customer has filed or threatened to file a dispute for any of the following:</li>
+  <ul>
+    <li>Loss in transit items</li>
+    <li>Unfulfilled orders</li>
+    <li>Resent damaged items</li>
+  </ul>
+</ul>
+<li><b>Always confirm the dispute has been filed or the threat has been clearly communicated before canceling.</b></li>
+
+  <h3>3. Cancellation Restrictions (When NOT to cancel)</h3>
+  <p>Orders that are:</p>
+  <ul>
+    <li>Fulfilled, in transit, or delivered</li>
+    <li>The original purchase that was placed along with an Aftersell (discounted add-on) item, and the customer wishes to retain only the Aftersell item—even if the request is made within 3 hours and the Aftersell item is not yet fulfilled.</li>
+  </ul>
+
+  <p>Orders with disputes filed but:</p>
+  <ul>
+    <li>Still within delivery timeframe (up to 15 business days)</li>
+    <li>Disputed due to delayed orders that are still moving</li>
+  </ul>
+</section>
+
+
+
+<section id="orderstatus">
+  <h2>🚨 Order Status Workflow</h2>
+
+  <h3>1. Unfulfilled for More Than 1 Day</h3>
+  <p><strong>Issue:</strong> Order has not been processed; no tracking provided.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier.</li>
+    <li>Inform the customer:<br>
+      <em>“We’re checking with our fulfillment team regarding your order status and will update you shortly.”</em>
+    </li>
+  </ul>
+
+  <h3>2. Info Received for More Than 3 Days</h3>
+  <p><strong>Issue:</strong> Tracking created but no shipment movement.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier.</li>
+    <li>Inform the customer:<br>
+      <em>“Your order has been marked for shipping, but there’s been no movement. We’re coordinating with our fulfillment team and will update you soon.”</em>
+    </li>
+  </ul>
+
+  <h3>3. Error in Tracking</h3>
+  <p><strong>Issue:</strong> Invalid or broken tracking link/number.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to fix or correct tracking info.</li>
+    <li>If you have platform access, assist the supplier in updating the tracking number.</li>
+  </ul>
+
+  <h3>4. No Movement for More Than 5 Days in Transit (Possible Lost in Transit)</h3>
+  <p><strong>Issue:</strong> Package stuck in the same location for over 5 days.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Follow up with the supplier and request a resend.</li>
+    <li>Inform the customer:<br>
+      <em>“It looks like your order may be lost in transit. We’ll resend it for you and offer a 30% discount for the inconvenience.”</em>
+    </li>
+    <li>If the customer has filed or threatened a dispute, refer to the Dispute Management Workflow.</li>
+  </ul>
+
+  <h3>5. In Transit but Moving (Delayed)</h3>
+  <p><strong>Issue:</strong> Package is delayed but tracking shows movement.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>If within delivery timeframe (15 business days): advise the customer to wait.</li>
+    <li>If outside delivery timeframe: offer a 30% discount for the delay.</li>
+  </ul>
+
+  <h3>6. Returned to Sender</h3>
+  <p><strong>Issue:</strong> Package is being returned to the supplier.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to resend the package.</li>
+    <li>If due to incorrect/incomplete address, contact the customer for the correct address.</li>
+  </ul>
+
+  <h3>7. Delivered but Not Received</h3>
+  <p><strong>Issue:</strong> Tracking shows "delivered" but customer didn’t receive the item.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Request Proof of Delivery (POD) from the supplier.</li>
+    <li>Advise the customer to:
+      <ul>
+        <li>Check with neighbors, building staff, or household members.</li>
+        <li>Wait up to 3 business days, as items may still arrive.</li>
+      </ul>
+    </li>
+    <li>If POD is provided but the customer insists they didn’t receive it:
+      <ul>
+        <li>Ask the customer to obtain a proof of loss from the courier.</li>
+        <li>Once provided, proceed to resend the item.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>8. Exception (Declared Lost by Courier)</h3>
+  <p><strong>Issue:</strong> Courier has marked the package as lost.</p>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Ask the supplier to resend.</li>
+    <li>Inform the customer:<br>
+      <em>“Your package has been declared lost in transit. We will resend it immediately.”</em>
+    </li>
+  </ul>
+
+  <h3>9. Failed Delivery Attempt</h3>
+  <p><strong>Issue:</strong> Courier failed to deliver the package due to:</p>
+  <ul>
+    <li>Recipient unavailable</li>
+    <li>Incorrect/incomplete address</li>
+    <li>Delivery refused</li>
+    <li>Restricted access</li>
+    <li>Weather or operational issues</li>
+  </ul>
+  <p><strong>✅ Action:</strong></p>
+  <ul>
+    <li>Notify the customer of the failed attempt.</li>
+    <li>Ask for any needed information (e.g., correct address or delivery instructions).</li>
+    <li>No refunds should be processed.</li>
+    <li>Resend the item once the issue is resolved.</li>
+  </ul>
+
+  <h3>❗ Important Note:</h3>
+ <ul>
+   <li>For <b>refused deliveries</b> or orders <b>not picked up</b>, no refund should be issued.</li>
+   <li> Resend the item once the issue is clarified.</li>
+  </ul>
+</section>
+
+
+
+
+<section id="meetings">
+  <h2><c>Minutes of Meeting (MoM)</h2>
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate13()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Date: </strong>June 10, 2025</span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent13" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+Time: 14:00 CET
+Duration: 40 minutes
+
+Attendees: Ali, Alvin, Camil, Cath, Chan, Marife
+
+Agenda Items:
+1. Performance Assessment for 2 Weeks
+
+2. Customer Issues Tab
+Dropdown reasons should reflect actual issues only
+Mandatory follow-up with suppliers until full resolution is confirmed
+
+3. Delivered but Not Received
+Ask for Proof of Delivery (POD) from supplier
+CX (Customer) to request proof of loss from courier
+If valid, reship the order at no cost to the customer
+
+4. Delayed Orders
+No full refunds for moving orders
+Offer 30% discount instead
+
+5. Supplier Refunded
+For refunded orders by previous suppliers:
+Reach out to customer to confirm if they’re willing to wait
+If yes, ask Claus to reship
+If no, proceed with refund
+
+6. Damaged, Missing / Incorrect Items
+First instance: Offer free replacement only
+Second occurrence: Offer partial refund (up to 50%) if the customer keeps the items
+For PayPal/Klarna cases: Add 30% discount to future purchase
+If threat/dispute filed: Offer full refund
+
+7. Replacement Fee
+Requires clarification on conditions for applying or waiving the fee
+
+8. Supplier Fulfillment Date Clarification – Sterling
+Clarify expected fulfillment timelines and accuracy from Sterling supplier
+Dropdown
+  </div>
+</div>
+
+<script>
+  function toggleTemplate13() {
+    const content = document.getElementById("templateContent13");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+</section>
+
+
+
+
+
+
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    function toggleDropdown() {
+      document.getElementById('workflowDropdown').classList.toggle('open');
+    }
+
+    function closeDropdown() {
+      document.getElementById('workflowDropdown').classList.remove('open');
+    }
+
+    window.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('workflowDropdown');
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>
