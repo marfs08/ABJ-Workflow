@@ -4,267 +4,220 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AB Jewelry</title>
-  <style>
-    :root {
-      --primary: #00539C;
-      --accent: #007BFF;
-      --bg: #f9f9f9;
-      --text: #333;
-      --card-bg: #fff;
-      --shadow: rgba(0, 0, 0, 0.1);
-    }
 
-    body {
-      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0 1rem;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      font-size: 16px;
-    }
+ <style>
+  :root {
+    --primary: #D4AF37; /* Gold */
+    --accent: #C5A100;  /* Deeper gold for hover */
+    --bg: #ffffff;      /* Light background */
+    --text: #000000;    /* Black text */
+    --card-bg: #ffffff;
+    --border: #e5e5e5;
+    --shadow: rgba(0, 0, 0, 0.05);
+  }
 
+  body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 25px;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  nav {
+    background-color: var(--card-bg);
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px var(--shadow);
+    border-bottom: 2px solid var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--text);
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  nav a:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  nav a.active {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background: var(--card-bg);
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px var(--shadow);
+    z-index: 10;
+    min-width: 180px;
+  }
+
+  .dropdown.open .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text);
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+
+  .dropdown-content a:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  h1, h2, h3 {
+    color: var(--text);
+    border-left: 5px solid var(--primary);
+    padding-left: 10px;
+    margin-top: 2rem;
+  }
+
+  section {
+    display: none;
+  }
+
+  section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .div-table {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px var(--shadow);
+    margin: 2rem 0;
+    background-color: var(--card-bg);
+  }
+
+  .div-table-row {
+    display: flex;
+    border-top: 1px solid var(--border);
+  }
+
+  .div-table-row:first-child {
+    border-top: none;
+  }
+
+  .div-table .cell {
+    flex: 1;
+    padding: 1rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .div-table .cell:last-child {
+    border-right: none;
+  }
+
+  .div-table-row.header {
+    background-color: #fff7e6;
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  .address {
+    background: #fffdf8;
+    border-left: 4px solid var(--primary);
+    padding: 1rem;
+    font-family: monospace;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px var(--shadow);
+    color: var(--text);
+  }
+
+  details summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: var(--primary);
+  }
+
+  @media (max-width: 768px) {
     nav {
-      background-color: var(--card-bg);
-      padding: 1rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      box-shadow: 0 2px 8px var(--shadow);
-      border-bottom: 1px solid #e0e0e0;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 600;
-      padding: 8px 12px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-
-    nav a:hover {
-      background-color: var(--accent);
-      color: #fff;
-    }
-
-    .dropdown {
-      position: relative;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: var(--card-bg);
-      box-shadow: 0 4px 12px var(--shadow);
-      border-radius: 6px;
-      padding: 0.5rem 0;
-      z-index: 100;
-      min-width: 200px;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 10px 20px;
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f0f0f0;
-      color: var(--accent);
-    }
-
-    .dropdown.open .dropdown-content {
-      display: block;
-    }
-
-    main {
-      max-width: 1000px;
-      padding: 2rem;
-      margin: 0 auto;
-    }
-
-    section {
-      display: none;
-    }
-
-    section.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-      margin-top: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1, h2, h3 {
-      color: var(--primary);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    h1:first-child {
-      margin-top: 0;
-    }
-
-    p, ul, ol {
-      margin-bottom: 1rem;
-    }
-
-    a {
-      color: var(--accent);
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .address {
-      background-color: var(--card-bg);
-      padding: 1rem;
-      border-left: 4px solid var(--accent);
-      margin: 1.5rem 0;
-      font-family: monospace;
-      white-space: pre-wrap;
-      font-size: 0.95rem;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px var(--shadow);
-    }
-
-    .div-table {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      overflow: hidden;
-      margin-top: 1rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 4px var(--shadow);
+    flex-direction: column;
+    align-items: center
     }
 
     .div-table-row {
-      display: flex;
-      flex-direction: row;
-      border-top: 1px solid #ccc;
-    }
-
-    .div-table-row:first-child {
-      border-top: none;
+      flex-direction: column;
     }
 
     .div-table .cell {
-      flex: 1;
-      padding: 14px 18px;
-      border-right: 1px solid #ccc;
+      border: none;
+      border-bottom: 1px solid #eee;
+      padding-left: 50%;
+      position: relative;
     }
 
-    .div-table .cell:last-child {
-      border-right: none;
+    .div-table .cell::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      width: 45%;
+      font-weight: bold;
+      color: var(--primary);
     }
 
     .div-table-row.header {
-      background-color: #f5f5f5;
-      font-weight: bold;
-      text-align: left;
+      display: none;
     }
-
-    details {
-      margin: 1rem 0;
-    }
-
-    summary {
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav a {
-        margin-bottom: 8px;
-      }
-
-      .dropdown-content {
-        position: static;
-        box-shadow: none;
-        border: none;
-        width: 100%;
-      }
-
-      .dropdown-content a {
-        padding-left: 10px;
-      }
-
-      main {
-        padding: 1.5rem;
-      }
-
-      .div-table-row {
-        flex-direction: column;
-      }
-
-      .div-table .cell {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding: 10px 12px 10px 50%;
-      }
-
-      .div-table .cell::before {
-        content: attr(data-label);
-        position: absolute;
-        top: 10px;
-        left: 12px;
-        width: 45%;
-        font-weight: bold;
-        white-space: nowrap;
-        color: #666;
-      }
-
-      .div-table-row.header {
-        display: none;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      h2 {
-        font-size: 1.25rem;
-      }
-
-      h3 {
-        font-size: 1.1rem;
-      }
-
-      .address {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
   <nav>
-  <a onclick="showSection('home')">Home</a>
-  <a href="https://ab-jewelry.co/" target="_blank">AB Jewelry</a>
-  <a onclick="showSection('storepolicies')">Store Policies</a>
-  <div class="dropdown" id="workflowDropdown">
+  <div class="nav-left">
+    <a class="active" onclick="showSection('home')">Home</a>
+    <a href="https://ab-jewelry.co/" target="_blank">AB Jewelry</a>
+    <a onclick="showSection('storepolicies')">Store Policies</a>
+  </div>
+  <div class="nav-right dropdown" id="workflowDropdown">
     <a onclick="toggleDropdown()">Workflow ▾</a>
     <div class="dropdown-content">
       <a onclick="showSection('workflow'); closeDropdown()">Delayed Orders</a>
@@ -273,6 +226,7 @@
       <a onclick="showSection('disputeMan'); closeDropdown()">Dispute</a>
       <a onclick="showSection('ordercancellation'); closeDropdown()">Order Cancellation</a>
       <a onclick="showSection('orderstatus'); closeDropdown()">Order Status</a>
+      <a onclick="showSection('meetings'); closeDropdown()">Meetings</a>
     </div>
   </div>
 </nav>
@@ -1313,6 +1267,7 @@ Please let us know how you’d like to proceed.
   <p>Orders that are:</p>
   <ul>
     <li>Fulfilled, in transit, or delivered</li>
+    <li>The original purchase that was placed along with an Aftersell (discounted add-on) item, and the customer wishes to retain only the Aftersell item—even if the request is made within 3 hours and the Aftersell item is not yet fulfilled.</li>
   </ul>
 
   <p>Orders with disputes filed but:</p>
@@ -1324,7 +1279,7 @@ Please let us know how you’d like to proceed.
 
 
 
-<section id="orderstatus" class="active">
+<section id="orderstatus">
   <h2>🚨 Order Status Workflow</h2>
 
   <h3>1. Unfulfilled for More Than 1 Day</h3>
@@ -1433,6 +1388,41 @@ Please let us know how you’d like to proceed.
    <li>For <b>refused deliveries</b> or orders <b>not picked up</b>, no refund should be issued.</li>
    <li> Resend the item once the issue is clarified.</li>
   </ul>
+</section>
+
+
+
+
+<section id="meetings">
+  <h2><c>Minutes of Meeting (MoM)</h2>
+  <div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate13()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Date:</strong>June 10, 2025</span>
+    <span id="arrow">▼</span>
+  </div>
+
+<div id="templateContent13" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+We're sorry to hear that the size didn’t fit / the quality did not meet your expectations.
+We’d like to resend the correct size or replace the item for you.
+Additionally, we can offer you a 30% discount as a goodwill gesture if you agree to withdraw the dispute/chargeback.
+Please let us know how you’d like to proceed.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate13() {
+    const content = document.getElementById("templateContent13");
+    const arrow = document.getElementById("arrow");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
 </section>
 
 
