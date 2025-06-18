@@ -1774,18 +1774,37 @@ Discussion Points & Action Items:
       targetSection.classList.add('active');
     }
 
+    const workflowParent = document.getElementById('workflowParent');
     document.querySelectorAll('nav a').forEach(link => {
-      link.classList.remove('active');
+      if (link !== workflowParent) {
+        link.classList.remove('active');
+      }
     });
 
     setTimeout(() => {
       const clickedLink = document.activeElement;
+      let matched = false;
+
       if (clickedLink.tagName.toLowerCase() === 'a') {
         clickedLink.classList.add('active');
         const dropdown = document.querySelector('#workflowDropdown .dropdown-content');
         if (dropdown && dropdown.contains(clickedLink)) {
-          document.getElementById('workflowParent').classList.add('active');
+          workflowParent.classList.add('active');
+          matched = true;
+        } else {
+          workflowParent.classList.remove('active');
         }
+      }
+
+      if (!matched) {
+        document.querySelectorAll('nav a').forEach(link => {
+          if (link.getAttribute('onclick')?.includes(sectionId)) {
+            link.classList.add('active');
+            if (document.querySelector('#workflowDropdown .dropdown-content')?.contains(link)) {
+              workflowParent.classList.add('active');
+            }
+          }
+        });
       }
     }, 0);
 
@@ -1812,6 +1831,7 @@ Discussion Points & Action Items:
     showSection(last);
   });
 </script>
+
 
 
 
