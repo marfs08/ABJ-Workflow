@@ -226,7 +226,7 @@
   <a onclick="showSection('storepolicies')">Store Policies</a>
 
   <div class="dropdown" id="workflowDropdown">
-    <a onclick="toggleDropdown()">Workflow ▾</a>
+    <a id="workflowParent" onclick="toggleDropdown()">Workflow ▾</a>
     <div class="dropdown-content">
       <a onclick="showSection('workflow'); closeDropdown()">Delayed Orders</a>
       <a onclick="showSection('returnfunnel'); closeDropdown()">Return Funnel</a>
@@ -1769,7 +1769,27 @@ Discussion Points & Action Items:
     document.querySelectorAll('section').forEach(section => {
       section.classList.remove('active');
     });
-    document.getElementById(sectionId).classList.add('active');
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      targetSection.classList.add('active');
+    }
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.remove('active');
+    });
+
+    setTimeout(() => {
+      const clickedLink = document.activeElement;
+      if (clickedLink.tagName.toLowerCase() === 'a') {
+        clickedLink.classList.add('active');
+        const dropdown = document.querySelector('#workflowDropdown .dropdown-content');
+        if (dropdown && dropdown.contains(clickedLink)) {
+          document.getElementById('workflowParent').classList.add('active');
+        }
+      }
+    }, 0);
+
+    localStorage.setItem('lastActiveSection', sectionId);
   }
 
   function toggleDropdown() {
@@ -1780,22 +1800,19 @@ Discussion Points & Action Items:
     document.getElementById('workflowDropdown').classList.remove('open');
   }
 
-  function setActive(clickedLink) {
-    // Only look at top-level nav links, including those inside the dropdown
-    const nav = document.querySelector('nav');
-    const links = nav.querySelectorAll('a');
-
-    links.forEach(link => link.classList.remove('active'));
-    clickedLink.classList.add('active');
-  }
-
-  window.addEventListener('click', function(e) {
+  window.addEventListener('click', function (e) {
     const dropdown = document.getElementById('workflowDropdown');
     if (!dropdown.contains(e.target)) {
       dropdown.classList.remove('open');
     }
   });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const last = localStorage.getItem('lastActiveSection') || 'home';
+    showSection(last);
+  });
 </script>
+
 
 
 </body>
