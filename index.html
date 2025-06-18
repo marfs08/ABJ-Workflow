@@ -1608,12 +1608,152 @@ Discussion Points & Action Items:
   }
 </script>
 
+<div style="max-width: 100%; font-family: Arial, sans-serif;">
+  <div 
+    onclick="toggleTemplate15()" 
+    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f1f1f1; padding: 12px 16px; border: 1px solid #ccc; border-radius: 4px;"
+  >
+    <span><strong>Date: </strong>June 17, 2025</span>
+    <span id="arrow15">▼</span>
+  </div>
+
+  <div id="templateContent15" style="display: none; margin-top: 10px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 4px; white-space: pre-wrap;">
+
+Time: 14:00 CET (35 minutes)  
+Platform: Google Meet  
+Attendees: Chan, Cath, Camil, Alvin, Ali, Marife  
+Meeting Frequency: Every Tuesday & Friday at 14:00 CET  
+
+Discussion Points & Action Items:
+
+1. Replacement Orders & New Store  
+- From now on, all replacement orders must be made in the new store system.  
+- Everyone was shown how to create a new customer profile in the new system.  
+- Make sure everything goes through the new store unless something isn't working — in that case, ask for help right away.
+
+2. Sending Invoices  
+- We went over how to send invoices properly from the new store.  
+- After sending an invoice, remember to delete the draft order so there’s no confusion.
+
+3. Productivity Tracking  
+- We’re now tracking productivity based on how many messages you send, not how many conversations you handle.  
+- This is because some customers send multiple emails until their issue is fully solved.
+
+4. Low Volume Inbox  
+- Since the inbox isn’t too busy right now, focus on clearing all order-related issues listed in the tracking sheet.
+
+5. Customs Email Follow-Up  
+- Use the email template provided when responding to customers who received messages about customs issues.  
+- Log each case in the “CUSTOMS EMAIL REPORT” sheet.  
+- Chan will look for and list the orders connected to these customers.
+
+  </div>
+</div>
+
+<script>
+  function toggleTemplate15() {
+    const content = document.getElementById("templateContent15");
+    const arrow = document.getElementById("arrow15");
+    const isVisible = content.style.display === "block";
+    content.style.display = isVisible ? "none" : "block";
+    arrow.textContent = isVisible ? "▼" : "▲";
+  }
+</script>
+
+
 	
 </section>
 
 
 
+<section id="CustomerIssues">
+  <h1>🧭 Customer Issue Resolution Workflow</h1>
 
+  <h2>1. Quality Concerns (Jewelry Appearance, Finish, Weight, Shine, etc.)</h2>
+  <p><strong>Definition:</strong> Customer feels the item does not meet expectations in terms of look, material, or overall feel.<br>
+  <strong>Important:</strong> These are subjective concerns and are not valid for supplier reshipment requests.</p>
+  <ul>
+    <li>❌ <strong>Do not ask for photos</strong></li>
+    <li>✅ Acknowledge and apologize for not meeting their expectations</li>
+    <li>🤝 Offer resolution on a case-by-case basis:
+      <ul>
+        <li>→ Temp check the customer’s tone and response first</li>
+        <li>→ If the customer seems mildly disappointed, offer a partial refund or discount (especially if they prefer to return)</li>
+        <li>→ If the customer is not very upset, you may offer a replacement with fee — but only after following the Return Funnel</li>
+      </ul>
+    </li>
+    <li>🗂️ Do not submit to supplier — this type of issue does not qualify for supplier reshipment.</li>
+  </ul>
+
+  <h2>2. Sizing Does Not Fit</h2>
+  <p><strong>Definition:</strong> Customer says the item does not fit properly.</p>
+  <ul>
+    <li>📏 Check if the item comes in other sizes
+      <ul>
+        <li>→ If available: offer replacement with reshipment fee</li>
+        <li>→ If not: offer different item replacement (also with reshipment fee)</li>
+      </ul>
+    </li>
+    <li>💬 Clearly communicate that reshipment fee applies</li>
+    <li>🧾 Follow up with correct invoice and shipping instructions</li>
+  </ul>
+
+  <h2>3. Damaged, Missing, or Incorrect Items</h2>
+  <p><strong>Definition:</strong> Jewelry item is damaged, incorrect, or something from the order is missing.</p>
+  <ul>
+    <li>📸 Request clear photos or videos from the customer showing the issue</li>
+    <li>👁️ Review and confirm the issue yourself as a support rep (no need to wait for customer to say it’s wrong — you decide if valid)</li>
+    <li>📩 Once confirmed on your end, submit the case to the supplier for reshipment</li>
+    <li>🔁 Request reshipment from the supplier</li>
+    <li>🧾 Wait for supplier to provide tracking or confirmation of the new shipment</li>
+  </ul>
+
+  <h2>4. Address or Item Change</h2>
+  <p><strong>Definition:</strong> Customer wants to change shipping address or ordered item.</p>
+  <ul>
+    <li>📦 If order is unfulfilled: update directly in the system</li>
+    <li>🚚 If order is fulfilled: request change from supplier (email or platform message)</li>
+    <li>✅ Confirm with customer once change is made</li>
+  </ul>
+
+  <h2>5. Return to Sender (RTS)</h2>
+  <p><strong>Definition:</strong> Parcel is returned by the courier.</p>
+  <ul>
+    <li>🔍 Check reason for RTS</li>
+    <li>🤝 Coordinate with supplier for reshipment fee</li>
+    <li>💳 If customer error (e.g., wrong address):
+      <ul>
+        <li>→ Ask customer to cover the fee</li>
+        <li>→ If they refuse: we can cover the fee</li>
+      </ul>
+    </li>
+    <li>📩 Ask supplier to resend order and send invoice for payment by owner</li>
+  </ul>
+
+  <h2>6. Delivered But Not Received</h2>
+  <p><strong>Definition:</strong> Order marked as delivered, but customer didn’t get it.</p>
+  <ul>
+    <li>📦 Request proof of delivery from supplier</li>
+    <li>📤 Share the proof with the customer</li>
+    <li>📄 If still not received: request proof of loss from customer (e.g., statement, ID)</li>
+    <li>🔁 Once obtained, offer free reshipment</li>
+  </ul>
+
+  <h2>7. Delayed Orders</h2>
+  <p><strong>Definition:</strong> Order taking longer than expected to arrive.</p>
+  <ul>
+    <li>⏱️ Refer to Delayed Orders Workflow</li>
+    <li>💬 Keep customer informed with tracking updates and delivery expectations</li>
+    <li>🎯 Only offer resolution (refund/reshipment) if time exceeds stated limits and courier shows no progress</li>
+  </ul>
+</section>
+
+
+
+
+
+
+	
 
 
 
