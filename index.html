@@ -1764,7 +1764,7 @@ Discussion Points & Action Items:
 
 
 
-  <script>
+<script>
   function showSection(sectionId) {
     document.querySelectorAll('section').forEach(section => {
       section.classList.remove('active');
@@ -1775,33 +1775,33 @@ Discussion Points & Action Items:
     }
 
     const workflowParent = document.getElementById('workflowParent');
+    const dropdown = document.querySelector('#workflowDropdown .dropdown-content');
+
     document.querySelectorAll('nav a').forEach(link => {
-      if (link !== workflowParent) {
-        link.classList.remove('active');
-      }
+      link.classList.remove('active');
     });
 
     setTimeout(() => {
       const clickedLink = document.activeElement;
-      let matched = false;
+      const isLink = clickedLink && clickedLink.tagName.toLowerCase() === 'a';
+      const isDropdownItem = isLink && dropdown && dropdown.contains(clickedLink);
 
-      if (clickedLink.tagName.toLowerCase() === 'a') {
+      if (isLink) {
         clickedLink.classList.add('active');
-        const dropdown = document.querySelector('#workflowDropdown .dropdown-content');
-        if (dropdown && dropdown.contains(clickedLink)) {
+        if (isDropdownItem) {
           workflowParent.classList.add('active');
-          matched = true;
         } else {
           workflowParent.classList.remove('active');
         }
-      }
-
-      if (!matched) {
+      } else {
         document.querySelectorAll('nav a').forEach(link => {
-          if (link.getAttribute('onclick')?.includes(sectionId)) {
+          const onclick = link.getAttribute('onclick');
+          if (onclick && onclick.includes(`showSection('${sectionId}')`)) {
             link.classList.add('active');
-            if (document.querySelector('#workflowDropdown .dropdown-content')?.contains(link)) {
+            if (dropdown && dropdown.contains(link)) {
               workflowParent.classList.add('active');
+            } else {
+              workflowParent.classList.remove('active');
             }
           }
         });
