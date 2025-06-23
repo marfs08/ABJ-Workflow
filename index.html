@@ -1977,10 +1977,20 @@ Please let us know how you’d like to proceed.
   });
 
   window.addEventListener('DOMContentLoaded', () => {
-    const last = localStorage.getItem('lastActiveSection') || 'home';
-    showSection(last);
+    const navType = window.performance.getEntriesByType("navigation")[0]?.type;
+
+    if (navType === "reload") {
+      // If the page was reloaded, go to home section
+      localStorage.setItem('lastActiveSection', 'home');
+      showSection('home');
+    } else {
+      // Otherwise restore the last visited section
+      const last = localStorage.getItem('lastActiveSection') || 'home';
+      showSection(last);
+    }
   });
 </script>
+
 
 
 
